@@ -16,17 +16,25 @@ export interface TsRequestInit<T> extends RequestInit {
     /**
      * Response Type
      */
-    response?: T;
+    returnType?: T;
 }
 
 export class TsFetch {
 
     // Cache for all GET and HEAD request
-    protected readonly requestCache: Map<string, [PromiseResRej, PromiseResRej][]> = new Map<string, [PromiseResRej, PromiseResRej][]>();
+    protected readonly requestCache: Map<string, [PromiseResRej, PromiseResRej][]> =
+        new Map<string, [PromiseResRej, PromiseResRej][]>();
+
+    // Overloads
+    public async send<T extends boolean>(options: TsRequestInit<T>): Promise<T>;
+    public async send<T extends number>(options: TsRequestInit<T>): Promise<T>;
+    public async send<T extends string>(options: TsRequestInit<T>): Promise<T>;
+    public async send<T>(options: TsRequestInit<new () => T>): Promise<T>;
+    public async send<T>(options: TsRequestInit<[new () => T]>): Promise<T[]>;
 
     // eslint-disable-next-line max-lines-per-function, max-statements, complexity
-    public async send<T>(options: TsRequestInit<T>): Promise<T> {
-        const {url, body, response: returnType, ...otherInits} = options;
+    public async send<T>(options: TsRequestInit<unknown>): Promise<T> {
+        const {url, body, returnType, ...otherInits} = options;
         const headers = options.headers ?? this.setHeaders();
         const input = url;
 
@@ -81,19 +89,25 @@ export class TsFetch {
             throw fetchError;
         }
 
-
         /**
          * Parse data
          */
         let data: unknown = void 0;
         if (returnType === void 0) {
             data = void 0;
-        } else if (Array.isArray(returnType) && responseText.startsWith("[")) {
+        } else if (
+            Array.isArray(returnType) &&
+            responseText.startsWith("[")
+        ) {
             data = JSON.parse(responseText) as object;
             // Return models.map((model: object) => new returnType[0]().fromJSON(model));
-        } else if (returnType instanceof Serializable && responseText.startsWith("{")) {
-            data = new (returnType as new () => Serializable)()
-                .fromJSON(JSON.parse(responseText) as object);
+        } else if (
+            typeof returnType === "function" &&
+            returnType.prototype instanceof Serializable &&
+            responseText.startsWith("{")
+        ) {
+            const constructor = returnType as new () => Serializable;
+            data = new constructor().fromJSON(JSON.parse(responseText) as object);
         } else if (typeof returnType === "object" && responseText.startsWith("{")) {
             data = JSON.parse(responseText) as object;
         } else if (typeof returnType === "string") {
