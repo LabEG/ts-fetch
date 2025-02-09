@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/class-methods-use-this */
+
 import type {Serializable} from "ts-serializable";
 import type {IGraphQuery} from "../models/view-models/graph-query.vm.js";
 import type {PageListQuery} from "../models/view-models/page-list-query.vm.js";
@@ -55,7 +55,8 @@ export abstract class CrudHttpRepository<T1 extends Serializable> extends TsFetc
         });
         return this.send({
             method: "PUT",
-            url: `${url}/${String(id)}`
+            url: `${url}/${String(id)}`,
+            body: value
         });
     }
 
@@ -71,13 +72,13 @@ export abstract class CrudHttpRepository<T1 extends Serializable> extends TsFetc
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    public async getGraphById (id: number | string, ...keys: (IGraphQuery | number | string)[]): Promise<T1> {
+    public async getGraphById (_id: number | string, ..._keys: (IGraphQuery | number | string)[]): Promise<T1> {
         await Promise.resolve();
         throw new Error("Method not implemented.");
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    public async getPaged (...keys: (PageListQuery | number | string)[]): Promise<PagedList<T1>> {
+    public async getPaged (..._keys: (PageListQuery | number | string)[]): Promise<PagedList<T1>> {
         await Promise.resolve();
         throw new Error("Method not implemented.");
     }

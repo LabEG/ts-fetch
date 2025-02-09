@@ -1,5 +1,6 @@
 export * from "./models/index.js";
 export * from "./contructors/TsFetch.js";
+export * from "./contructors/CrudHttpRepository.js";
 
 import {TsFetch} from "./contructors/TsFetch.js";
 
