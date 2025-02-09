@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 
 import {Serializable} from "ts-serializable";
-import {BackError} from "../models/errors/back.error";
-import {NetError} from "../models/errors/net.error";
+import {BackError} from "../models/errors/back.error.js";
+import {NetError} from "../models/errors/net.error.js";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PromiseResRej = (obj: any) => void;
