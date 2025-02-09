@@ -4,7 +4,7 @@
     "author": "Eugene Labutin",
     "license": "MIT",
     "homepage": "https://github.com/LabEG/ts-fetch#readme",
-    "description": "Serialization and deserialization for classes",
+    "description": "A small library for sending serialized data and receiving deserialized data with strict data type checking.",
     "main": "./dist/index.js",
     "type": "module",
     "typings": "./dist/index.d.ts",
@@ -28,7 +28,7 @@
         "build": "tsc --project tsconfig.build.json && node ./dist/index.js",
         "prepublishOnly": "npm run lint && npm run build && npm run test",
         "upgrade": "ncu -u && rimraf node_modules package-lock.json && npm i",
-        "release": "cliff-jumper --name 'ts-serializable' --package-path '.' --no-skip-changelog --no-skip-tag",
+        "release": "cliff-jumper --name 'ts-fetch' --package-path '.' --no-skip-changelog --no-skip-tag",
         "prepare": "husky install"
     },
     "peerDependencies": {
@@ -51,6 +51,9 @@
     },
     "keywords": [
         "serialization",
-        "deserialization"
+        "deserialization",
+        "fetch",
+        "request",
+        "ajax"
     ]
 }
