@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2025-02-09
+
+### ⚙️ Miscellaneous Tasks
+
+- Update typings and imports
+
 ## [0.2.0] - 2025-02-09
 
 ### 🚀 Features
