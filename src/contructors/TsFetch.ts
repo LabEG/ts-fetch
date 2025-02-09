@@ -4,7 +4,8 @@ import {Serializable} from "ts-serializable";
 import {BackError} from "../models/errors/back.error";
 import {NetError} from "../models/errors/net.error";
 
-type PromiseResRej = (obj: unknown) => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PromiseResRej = (obj: any) => void;
 
 export interface TsRequestInit<T> extends RequestInit {
 
