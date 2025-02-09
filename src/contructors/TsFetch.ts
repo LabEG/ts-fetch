@@ -1,0 +1,185 @@
+/* eslint-disable class-methods-use-this */
+
+import {Serializable} from "ts-serializable";
+import {BackError} from "../models/errors/back.error";
+import {NetError} from "../models/errors/net.error";
+
+type PromiseResRej = (obj: unknown) => void;
+
+export interface TsRequestInit<T> extends RequestInit {
+
+    /**
+     * URL for request
+     */
+    url: string | URL | globalThis.Request;
+
+    /**
+     * Response Type
+     */
+    response?: T;
+}
+
+export class TsFetch {
+
+    // Cache for all GET and HEAD request
+    protected readonly requestCache: Map<string, [PromiseResRej, PromiseResRej][]> = new Map<string, [PromiseResRej, PromiseResRej][]>();
+
+    // eslint-disable-next-line max-lines-per-function, max-statements, complexity
+    public async send<T>(options: TsRequestInit<T>): Promise<T> {
+        const {url, body, response: returnType, ...otherInits} = options;
+        const headers = options.headers ?? this.setHeaders();
+        const input = url;
+
+        /**
+         * Setup cache
+         */
+        const isCacheableRequest: boolean = options.method === "GET" || options.method === "HEAD";
+        const cacheKey = [
+            options.method,
+            input instanceof globalThis.Request ? input.url : input
+        ].join(" ");
+
+        if (isCacheableRequest) {
+            if (this.requestCache.has(cacheKey)) {
+                return new Promise((res: (val: T) => void, rej: () => void) => {
+                    this.requestCache.get(cacheKey)?.push([res, rej]); // [res, rej] - its tuple
+                });
+            }
+            this.requestCache.set(cacheKey, []);
+        }
+
+
+        /**
+         * Process request
+         */
+        // eslint-disable-next-line no-useless-assignment
+        let responseText: string = "";
+        try {
+            let response = await fetch(
+                input,
+                {
+                    method: options.method,
+                    body: typeof body === "undefined" ? void 0 : JSON.stringify(body),
+                    headers,
+                    ...otherInits
+                }
+            );
+            response = await this.handleError(response);
+            responseText = await response.text();
+        } catch (fetchError: unknown) {
+            if (isCacheableRequest && this.requestCache.has(cacheKey)) {
+                this.requestCache.get(cacheKey)?.forEach((tuple: [PromiseResRej, PromiseResRej]) => {
+                    try {
+                        tuple[1](fetchError);
+                    } catch (re: unknown) {
+                        // eslint-disable-next-line no-console
+                        console.error(re);
+                    }
+                });
+                this.requestCache.delete(cacheKey);
+            }
+            throw fetchError;
+        }
+
+
+        /**
+         * Parse data
+         */
+        let data: unknown = void 0;
+        if (returnType === void 0) {
+            data = void 0;
+        } else if (Array.isArray(returnType) && responseText.startsWith("[")) {
+            data = JSON.parse(responseText) as object;
+            // Return models.map((model: object) => new returnType[0]().fromJSON(model));
+        } else if (returnType instanceof Serializable && responseText.startsWith("{")) {
+            data = new (returnType as new () => Serializable)()
+                .fromJSON(JSON.parse(responseText) as object);
+        } else if (typeof returnType === "object" && responseText.startsWith("{")) {
+            data = JSON.parse(responseText) as object;
+        } else if (typeof returnType === "string") {
+            data = responseText;
+        } else if (typeof returnType === "number") {
+            data = Number(responseText);
+        } else if (typeof returnType === "boolean") {
+            data = Boolean(responseText);
+        } else if (typeof returnType === "undefined") {
+            data = void 0;
+        } else {
+            const error = new NetError(`Wrong returned type. Must by ${typeof returnType} but return ${typeof responseText}`);
+            if (isCacheableRequest && this.requestCache.has(cacheKey)) {
+                this.requestCache.get(cacheKey)?.forEach((tuple: [PromiseResRej, PromiseResRej]) => {
+                    try {
+                        tuple[1](error);
+                    } catch (typeError: unknown) {
+                        // eslint-disable-next-line no-console
+                        console.error(typeError);
+                    }
+                });
+                this.requestCache.delete(cacheKey);
+            }
+            throw error;
+        }
+
+
+        /**
+         * Restore cache
+         */
+        if (isCacheableRequest && this.requestCache.has(cacheKey)) {
+            this.requestCache.get(cacheKey)?.forEach((tuple: [PromiseResRej, PromiseResRej]) => {
+                try {
+                    tuple[0](data as T);
+                } catch (promiseError: unknown) {
+                    // eslint-disable-next-line no-console
+                    console.error(promiseError);
+                }
+            });
+            this.requestCache.delete(cacheKey);
+        }
+
+        return data as T;
+    }
+
+    // eslint-disable-next-line max-statements
+    protected async handleError (response: Response): Promise<Response> {
+        if (response.ok) {
+            return response;
+        }
+
+        const body: string = await response.text();
+        // eslint-disable-next-line no-useless-assignment
+        let error: BackError | NetError | null = null;
+
+        if (response.status === 401) {
+            error = new NetError("Authorization exception", 401);
+        } else if (body.startsWith("<")) { // Java xml response
+            // eslint-disable-next-line prefer-named-capture-group
+            const match: RegExpMatchArray | null = (/<b>description<\/b> <u>(.+?)<\/u>/gu).exec(body);
+            error = new NetError(`${response.status.toString()} - ${((match?.[1] ?? response.statusText) || "Ошибка не указана")}`);
+        } else if (body.startsWith("{")) { // Backend response
+            error = this.parseBackendError(response, body);
+        } else {
+            error = new NetError(`${response.status.toString()} - ${response.statusText}`);
+        }
+
+        error.status = response.status;
+        error.body = body;
+
+        throw error;
+    }
+
+    protected setHeaders (): Headers {
+        const headers = new Headers();
+        headers.set("content-type", "application/json");
+        headers.set("Pragma", "no-cache");
+        return headers;
+    }
+
+    protected parseBackendError (response: Response, body: string): BackError {
+        // Override method, check on message property
+        const backError = new BackError(`${response.status.toString()} - ${response.statusText}`);
+        backError.body = body;
+
+        return backError;
+    }
+
+}
