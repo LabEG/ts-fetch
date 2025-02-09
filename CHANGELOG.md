@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2025-02-09
+
+### 🚀 Features
+
+- Add crud http repository
+
 ## [0.2.2] - 2025-02-09
 
 ### ⚙️ Miscellaneous Tasks
