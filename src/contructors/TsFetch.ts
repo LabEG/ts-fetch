@@ -3,16 +3,22 @@
 import {Serializable} from "ts-serializable";
 import {BackError} from "../models/errors/back.error.js";
 import {NetError} from "../models/errors/net.error.js";
+import {BodyInit} from "undici-types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PromiseResRej = (obj: any) => void;
 
-export interface TsRequestInit<T> extends RequestInit {
+export interface TsRequestInit<T> extends Omit<RequestInit, "body"> {
 
     /**
      * URL for request
      */
     url: string | URL | globalThis.Request;
+
+    /**
+     * Body for fetch
+     */
+    body?: BodyInit | object;
 
     /**
      * Response Type
@@ -27,6 +33,7 @@ export class TsFetch {
         new Map<string, [PromiseResRej, PromiseResRej][]>();
 
     // Overloads
+    public async send (options: TsRequestInit<void>): Promise<void>;
     public async send<T extends boolean>(options: TsRequestInit<T>): Promise<T>;
     public async send<T extends number>(options: TsRequestInit<T>): Promise<T>;
     public async send<T extends string>(options: TsRequestInit<T>): Promise<T>;

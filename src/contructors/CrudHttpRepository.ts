@@ -13,51 +13,70 @@ export abstract class CrudHttpRepository<T1 extends Serializable> extends TsFetc
 
     public async getById (id: number | string, ...keys: (number | string)[]): Promise<T1> {
         let url = this.apiRoot;
-        keys.forEach((key: string): void => {
+        keys.forEach((key: number | string): void => {
             url = url.replace(/\{.+\}/gu, String(key));
         });
-        return this.customRequestAsT("GET", `${url}/${id}`, void 0, this.modelConstructor);
+        return this.send({
+            method: "GET",
+            url: `${url}/${String(id)}`,
+            returnType: this.modelConstructor
+        });
     }
 
     public async getAll (...keys: (number | string)[]): Promise<T1[]> {
         let url = this.apiRoot;
-        keys.forEach((key: string): void => {
+        keys.forEach((key: number | string): void => {
             url = url.replace(/\{.+\}/gu, String(key));
         });
-        return this.customRequestAsArrayT("GET", `${url}/`, void 0, [this.modelConstructor]);
+        return this.send({
+            method: "GET",
+            url: `${url}/`,
+            returnType: [this.modelConstructor]
+        });
     }
 
     public async create (value: T1, ...keys: (number | string)[]): Promise<T1> {
         let url = this.apiRoot;
-        keys.forEach((key: string): void => {
+        keys.forEach((key: number | string): void => {
             url = url.replace(/\{.+\}/gu, String(key));
         });
-        return this.customRequestAsT("POST", `${url}/`, value, this.modelConstructor);
+        return this.send({
+            method: "POST",
+            url: `${url}/`,
+            body: value,
+            returnType: this.modelConstructor
+        });
     }
 
     public async update (id: number | string, value: T1, ...keys: (number | string)[]): Promise<void> {
         let url = this.apiRoot;
-        keys.forEach((key: string): void => {
+        keys.forEach((key: number | string): void => {
             url = url.replace(/\{.+\}/gu, String(key));
         });
-        return this.customRequest("PUT", `${url}/${id}`, value, void 0);
+        return this.send({
+            method: "PUT",
+            url: `${url}/${String(id)}`
+        });
     }
 
     public async delete (id: number | string, ...keys: (number | string)[]): Promise<void> {
         let url = this.apiRoot;
-        keys.forEach((key: string): void => {
+        keys.forEach((key: number | string): void => {
             url = url.replace(/\{.+\}/gu, String(key));
         });
-        return this.customRequest("DELETE", `${url}/${id}`, void 0, void 0);
+        return this.send({
+            method: "DELETE",
+            url: `${url}/${String(id)}`
+        });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     public async getGraphById (id: number | string, ...keys: (IGraphQuery | number | string)[]): Promise<T1> {
         await Promise.resolve();
         throw new Error("Method not implemented.");
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     public async getPaged (...keys: (PageListQuery | number | string)[]): Promise<PagedList<T1>> {
         await Promise.resolve();
         throw new Error("Method not implemented.");
