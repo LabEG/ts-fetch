@@ -1,5 +1,5 @@
 {
-    "name": "ts-fetch",
+    "name": "@labeg/tfetch",
     "version": "0.3.0",
     "author": "Eugene Labutin",
     "license": "MIT",
