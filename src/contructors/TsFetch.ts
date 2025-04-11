@@ -43,7 +43,6 @@ export class TsFetch {
     // eslint-disable-next-line max-lines-per-function, max-statements, complexity
     public async send<T>(options: TsRequestInit<unknown>): Promise<T> {
         const {url, body, returnType, ...otherInits} = options;
-        const headers = options.headers ?? this.setHeaders();
         const input = url;
 
         /**
@@ -64,6 +63,34 @@ export class TsFetch {
             this.requestCache.set(cacheKey, []);
         }
 
+        /**
+         * Prepare headers
+         */
+
+        let sendBody: BodyInit | undefined = void 0;
+        const headers = this.setHeaders();
+        if (
+            body instanceof ArrayBuffer ||
+            body instanceof Uint8Array ||
+            body instanceof Blob ||
+            body instanceof FormData ||
+            // NodeJS.ArrayBufferView
+            body instanceof URLSearchParams ||
+            body === null ||
+            typeof body === "string"
+        ) {
+            // Fetch add needed headers self
+            sendBody = body;
+        } else if (typeof body === "object") {
+            headers.set("content-type", "application/json");
+            sendBody = JSON.stringify(body);
+        }
+        if (options.headers) {
+            const optHeaders = new Headers(options.headers);
+            for (const entry of optHeaders.entries()) {
+                headers.set(entry[0], entry[1]);
+            }
+        }
 
         /**
          * Process request
@@ -75,7 +102,7 @@ export class TsFetch {
                 input,
                 {
                     method: options.method,
-                    body: typeof body === "undefined" ? void 0 : JSON.stringify(body),
+                    body: sendBody,
                     headers,
                     ...otherInits
                 }
@@ -191,8 +218,6 @@ export class TsFetch {
 
     protected setHeaders (): Headers {
         const headers = new Headers();
-        headers.set("content-type", "application/json");
-        headers.set("Pragma", "no-cache");
         return headers;
     }
 
