@@ -15,18 +15,33 @@ describe("ts-fetch can work with classes", () => {
             .header("Content-Type", "application/json")
             .send(JSON.stringify(new TestClass())));
 
+        fastify.get("/array", (_req, reply) => reply
+            .code(200)
+            .header("Content-Type", "application/json")
+            .send(JSON.stringify([new TestClass()])));
+
         fastify.listen({port: 3001});
         await fastify.ready();
     });
 
-    it("ts-fetch can send a simple request", async () => {
-        const result: unknown = await tfetch({
+    it("ts-fetch can deserialize class", async () => {
+        const result: TestClass = await tfetch({
             url: "http://localhost:3001/class",
             returnType: TestClass
         });
 
         assert.deepEqual(new TestClass(), result, "Result must be deep Equal to TestClass");
         assert.isTrue(result instanceof TestClass, "Result must be instance of TestClass");
+    });
+
+    it("ts-fetch can deserialize array", async () => {
+        const result: TestClass[] = await tfetch({
+            url: "http://localhost:3001/array",
+            returnType: [TestClass]
+        });
+
+        assert.deepEqual([new TestClass()], result, "Result must be deep Equal to TestClass");
+        assert.isTrue(result[0] instanceof TestClass, "Result must be instance of TestClass");
     });
 
     after(async () => {

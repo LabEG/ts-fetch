@@ -135,7 +135,14 @@ export class TsFetch {
             responseText.startsWith("[")
         ) {
             data = JSON.parse(responseText) as object;
-            // Return models.map((model: object) => new returnType[0]().fromJSON(model));
+
+            if ( // If its Serializable class
+                typeof returnType[0] === "function" &&
+                (returnType[0] as new () => Serializable).prototype instanceof Serializable
+            ) {
+                const constructor = returnType[0] as new () => Serializable;
+                data = (data as object[]).map((model: object) => new constructor().fromJSON(model));
+            }
         } else if (
             typeof returnType === "function" &&
             returnType.prototype instanceof Serializable &&
