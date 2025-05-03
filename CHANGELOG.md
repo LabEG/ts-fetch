@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2025-05-03
+
+### 🚀 Features
+
+- *(tests)* Enhance class deserialization tests for single and array responses
+
 ## [0.5.0] - 2025-05-03
 
 ### 🚀 Features
