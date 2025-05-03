@@ -8,7 +8,7 @@ import {tfetch} from "../src/index";
 import {default as sFastify} from "fastify";
 
 
-describe("ts fetch can work with primitives values", () => {
+describe("ts-fetch can work with primitive values", () => {
     const fastify = sFastify();
 
     before(async () => {
@@ -36,7 +36,7 @@ describe("ts fetch can work with primitives values", () => {
         await fastify.ready();
     });
 
-    it("ts fetch can send simple request", async () => {
+    it("ts-fetch can send a simple request", async () => {
         const result: unknown = await tfetch({
             url: "http://localhost:3000/void"
         });
@@ -44,33 +44,33 @@ describe("ts fetch can work with primitives values", () => {
         assert.isUndefined(result, "Result must be undefined");
     });
 
-    it("ts fetch can parse numbers primitives", async () => {
+    it("ts-fetch can parse number primitives", async () => {
         const result: number = await tfetch({
             url: "http://localhost:3000/number",
             returnType: 0
         });
 
-        assert.isNumber(result, "Result must be number");
+        assert.isNumber(result, "Result must be a number");
         assert.strictEqual(result, 5, "Result must be 5");
     });
 
-    it("ts fetch can parse string primitives", async () => {
+    it("ts-fetch can parse string primitives", async () => {
         const result: string = await tfetch({
             url: "http://localhost:3000/string",
-            returnType: "123"
+            returnType: ""
         });
 
-        assert.isString(result, "Result must be string");
+        assert.isString(result, "Result must be a string");
         assert.strictEqual(result, "123", "Result must be '123'");
     });
 
-    it("ts fetch can parse boolean primitives", async () => {
+    it("ts-fetch can parse boolean primitives", async () => {
         const result: boolean = await tfetch({
             url: "http://localhost:3000/boolean",
             returnType: true
         });
 
-        assert.isBoolean(result, "Result must be boolean");
+        assert.isBoolean(result, "Result must be a boolean");
         assert.strictEqual(result, true, "Result must be 'true'");
     });
 
