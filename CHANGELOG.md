@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2025-05-03
+
+### 🚀 Features
+
+- Add fastify dependency and implement tests for primitive values
+- *(tests)* Add class-based tests and improve primitive tests descriptions
+
 ## [0.4.0] - 2025-02-09
 
 ### 🚀 Features
