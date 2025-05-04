@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.1] - 2025-05-04
+
+### 📚 Documentation
+
+- Update README with detailed usage examples and error handling
+
 ## [0.7.0] - 2025-05-04
 
 ### 🚀 Features
