@@ -32,6 +32,11 @@ describe("ts-fetch can work with primitive values", () => {
             .header("Content-Type", "application/json")
             .send(true));
 
+        fastify.get("/array", (_req, reply) => reply
+            .code(200)
+            .header("Content-Type", "application/json")
+            .send([1, 2, 3]));
+
         fastify.listen({port: 3000});
         await fastify.ready();
     });
@@ -72,6 +77,16 @@ describe("ts-fetch can work with primitive values", () => {
 
         assert.isBoolean(result, "Result must be a boolean");
         assert.strictEqual(result, true, "Result must be 'true'");
+    });
+
+    it("ts-fetch can parse array primitives", async () => {
+        const result: number[] = await tfetch({
+            url: "http://localhost:3000/array",
+            returnType: [0]
+        });
+
+        assert.isArray(result, "Result must be a array");
+        assert.deepEqual(result, [1, 2, 3], "Result must be equal");
     });
 
     after(async () => {

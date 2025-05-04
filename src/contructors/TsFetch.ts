@@ -32,12 +32,23 @@ export class TsFetch {
     protected readonly requestCache: Map<string, [PromiseResRej, PromiseResRej][]> =
         new Map<string, [PromiseResRej, PromiseResRej][]>();
 
-    // Overloads
+    /**
+     * Overloads
+     */
+
+    // No body and response
     public async send (options: TsRequestInit<void>): Promise<void>;
-    public async send<T extends boolean>(options: TsRequestInit<T>): Promise<T>;
-    public async send<T extends number>(options: TsRequestInit<T>): Promise<T>;
-    public async send<T extends string>(options: TsRequestInit<T>): Promise<T>;
+
+    // Primitive types
+    public async send<T extends (boolean | number | string)>(options: TsRequestInit<T>): Promise<T>;
+
+    // Arrays from primitive types
+    public async send<T extends (boolean | number | string)[]>(options: TsRequestInit<T>): Promise<T>;
+
+    // Serializable classes
     public async send<T>(options: TsRequestInit<new () => T>): Promise<T>;
+
+    // Arrays from Serializable classes
     public async send<T>(options: TsRequestInit<[new () => T]>): Promise<T[]>;
 
     // eslint-disable-next-line max-lines-per-function, max-statements, complexity
