@@ -35,20 +35,20 @@
         "ts-serializable": ">=3.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^19.6.1",
-        "@commitlint/config-conventional": "^19.6.0",
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
         "@favware/cliff-jumper": "^6.0.0",
-        "@labeg/code-style": "^6.0.0",
-        "@swc-node/register": "^1.10.9",
-        "@types/chai": "^5.0.1",
-        "chai": "^5.1.2",
-        "fastify": "^5.2.2",
+        "@labeg/code-style": "^6.5.0",
+        "@swc-node/register": "^1.10.10",
+        "@types/chai": "^5.2.2",
+        "chai": "^5.2.1",
+        "fastify": "^5.4.0",
         "husky": "^9.1.7",
-        "lint-staged": "^15.3.0",
-        "npm-check-updates": "^17.1.13",
+        "lint-staged": "^16.1.2",
+        "npm-check-updates": "^18.0.1",
         "rimraf": "^6.0.1",
-        "ts-serializable": "^3.7.3",
-        "typescript": "^5.7.2"
+        "ts-serializable": "^4.2.1",
+        "typescript": "^5.8.3"
     },
     "keywords": [
         "serialization",
