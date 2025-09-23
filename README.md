@@ -9,7 +9,7 @@ Installation
 You can use the following command to install this package:
 
 ```bash
-npm install ts-fetch
+npm install @labeg/tfetch
 ```
 
 Usage
@@ -18,7 +18,7 @@ Usage
 ### Basic Usage
 
 ```typescript
-import { tfetch } from "ts-fetch";
+import { tfetch } from "@labeg/tfetch";
 
 // Example with primitive types
 const fetchNumber = async () => {
@@ -35,7 +35,7 @@ fetchNumber();
 ### Working with Serializable Classes
 
 ```typescript
-import { tfetch } from "ts-fetch";
+import { tfetch } from "@labeg/tfetch";
 import { TestClass } from "./fixtures/TestClass";
 
 const fetchClass = async () => {
@@ -52,7 +52,7 @@ fetchClass();
 ### CRUD Operations with `CrudHttpRepository`
 
 ```typescript
-import { CrudHttpRepository } from "ts-fetch";
+import { CrudHttpRepository } from "@labeg/tfetch";
 import { TestClass } from "./fixtures/TestClass";
 
 class TestRepository extends CrudHttpRepository<TestClass> {
@@ -75,7 +75,7 @@ fetchData();
 The library provides custom error classes for handling network and backend errors:
 
 ```typescript
-import { tfetch } from "ts-fetch";
+import { tfetch } from "@labeg/tfetch";
 
 const fetchWithErrorHandling = async () => {
     try {
