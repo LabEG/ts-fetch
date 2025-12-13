@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.2] - 2025-12-13
+
+### 📚 Documentation
+
+- Update README with example of using Serializable classes for automatic deserialization
+
 ## [0.8.1] - 2025-12-13
 
 ### 📚 Documentation
