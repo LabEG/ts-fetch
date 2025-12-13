@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0] - 2025-12-13
+
+### 🚀 Features
+
+- Add issue templates for bug reports and feature requests and implement security policy
+
+### 🐛 Bug Fixes
+
+- Update branch references from master to main in workflow files
+
+### ⚙️ Miscellaneous Tasks
+
+- Update Dependabot and npm-publish schedules to run on Wednesdays
+
 ## [0.7.3] - 2025-09-23
 
 ### 📚 Documentation

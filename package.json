@@ -1,6 +1,6 @@
 {
     "name": "@labeg/tfetch",
-    "version": "0.7.3",
+    "version": "0.8.0",
     "author": "Eugene Labutin",
     "license": "MIT",
     "homepage": "https://github.com/LabEG/ts-fetch#readme",
@@ -35,17 +35,17 @@
         "ts-serializable": ">=3.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
+        "@commitlint/cli": "^20.2.0",
+        "@commitlint/config-conventional": "^20.2.0",
         "@favware/cliff-jumper": "^6.0.0",
         "@labeg/code-style": "^6.5.0",
         "@swc-node/register": "^1.10.10",
         "@types/chai": "^5.2.2",
-        "chai": "^5.2.1",
+        "chai": "^6.2.1",
         "fastify": "^5.4.0",
         "husky": "^9.1.7",
         "lint-staged": "^16.1.2",
-        "npm-check-updates": "^18.0.1",
+        "npm-check-updates": "^19.2.0",
         "rimraf": "^6.0.1",
         "ts-serializable": "^4.2.1",
         "typescript": "^5.8.3"
