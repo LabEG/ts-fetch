@@ -29,7 +29,7 @@
         "prepublishOnly": "npm run lint && npm run build && npm run test",
         "upgrade": "ncu -u && rimraf node_modules package-lock.json && npm i",
         "release": "cliff-jumper --name 'ts-fetch' --package-path '.' --no-skip-changelog --no-skip-tag",
-        "prepare": "husky install"
+        "prepare": "husky"
     },
     "peerDependencies": {
         "ts-serializable": ">=3.0.0"
