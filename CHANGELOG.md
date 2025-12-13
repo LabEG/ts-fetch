@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.3] - 2025-09-23
+
+### 📚 Documentation
+
+- Update installation and import paths in README for package name consistency
+
 ## [0.7.2] - 2025-07-17
 
 ### ⚙️ Miscellaneous Tasks
