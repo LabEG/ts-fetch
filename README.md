@@ -37,19 +37,33 @@ fetchNumber();
 
 ### Working with Serializable Classes
 
+To use automatic deserialization with classes, you need to use the [ts-serializable](https://github.com/LabEG/Serializable) library to define your models:
+
 ```typescript
 import { tfetch } from "@labeg/tfetch";
-import { TestClass } from "./fixtures/TestClass";
+import { Serializable, jsonProperty } from "ts-serializable";
 
-const fetchClass = async () => {
-    const result: TestClass = await tfetch({
-        url: "https://example.com/class",
-        returnType: TestClass
+class User extends Serializable {
+    @jsonProperty(String)
+    public name: string = "";
+
+    @jsonProperty(String)
+    public email: string = "";
+
+    @jsonProperty(Number)
+    public age: number = 0;
+}
+
+const fetchUser = async () => {
+    const result: User = await tfetch({
+        url: "https://example.com/api/user/1",
+        returnType: User
     });
-    console.log(result instanceof TestClass); // true
+    console.log(result instanceof User); // true
+    console.log(result.name); // Properly deserialized
 };
 
-fetchClass();
+fetchUser();
 ```
 
 ### POST Request with Body
