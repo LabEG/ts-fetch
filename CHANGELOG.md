@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.1] - 2025-12-13
+
+### 📚 Documentation
+
+- Enhance README with additional usage examples and advanced fetch options
+
 ## [0.8.0] - 2025-12-13
 
 ### 🚀 Features
