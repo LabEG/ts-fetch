@@ -4,7 +4,7 @@
 import("reflect-metadata"); // Polyfill
 import {assert} from "chai";
 import {describe, it, before, after} from "node:test";
-import {tfetch} from "../src/index";
+import {tfetch} from "../src/index.js";
 import {default as sFastify} from "fastify";
 
 

@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import {jsonProperty} from "ts-serializable";
-import {BaseClass} from "./BaseClass";
+import {BaseClass} from "./BaseClass.js";
 
 export class TestSubclass extends BaseClass {
 

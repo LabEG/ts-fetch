@@ -1,9 +1,9 @@
 import("reflect-metadata"); // Polyfill
 import {assert} from "chai";
 import {describe, it, before, after} from "node:test";
-import {tfetch} from "../src/index";
+import {tfetch} from "../src/index.js";
 import {default as sFastify} from "fastify";
-import {TestClass} from "./fixtures/TestClass";
+import {TestClass} from "./fixtures/TestClass.js";
 
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,6 +20,7 @@ describe("ts-fetch can work with classes", () => {
             .code(200)
             .header("Content-Type", "application/json")
             .send(JSON.stringify({
+
                 // eslint-disable-next-line @typescript-eslint/no-misused-spread
                 ...new TestClass(),
                 ...{
