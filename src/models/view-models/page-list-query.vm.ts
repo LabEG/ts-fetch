@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import type {IGraphQuery} from "./graph-query.vm";
+import type {IGraphQuery} from "./graph-query.vm.js";
 
 export enum PageListQueryFilterMethod {
     Less = "Less",
