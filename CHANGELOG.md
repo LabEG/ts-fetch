@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.11] - 2026-04-19
+
+### 🐛 Bug Fixes
+
+- Add rootDir option to compilerOptions in tsconfig.build.json
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 ## [0.8.10] - 2026-04-19
 
 ### 🐛 Bug Fixes
