@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.10] - 2026-04-19
+
+### 🐛 Bug Fixes
+
+- Update import paths to include file extensions for compatibility
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 ## [0.8.9] - 2026-04-19
 
 ### ⚙️ Miscellaneous Tasks
