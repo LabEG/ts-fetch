@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES2020",
-        "module": "ESNext",
+        "module": "nodenext",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": [
@@ -12,7 +12,7 @@
         "noUnusedParameters": true,
         "pretty": true,
         "strict": true,
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "resolveJsonModule": true,
         "noEmit": true
     },
@@ -20,5 +20,11 @@
         "./node_modules/reflect-metadata/index.d.ts",
         "./src/**/*",
         "./tests/**/*"
-    ]
+    ],
+    "ts-node": {
+        "esm": true,
+        "swc": true,
+        "experimentalResolver": true,
+        "experimentalSpecifierResolution": "node"
+    }
 }
