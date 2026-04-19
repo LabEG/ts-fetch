@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.9] - 2026-04-19
+
+### ⚙️ Miscellaneous Tasks
+
+- Update package version to 0.8.8 and add support for ts-node with nodenext module resolution
+- *(deps)* Bump lewagon/wait-on-check-action from 1.4.1 to 1.5.0
+- *(deps)* Bump lewagon/wait-on-check-action from 1.5.0 to 1.6.0 (#24)
+- *(deps)* Bump lewagon/wait-on-check-action from 1.6.0 to 1.6.1 (#26)
+- *(deps)* Bump dependabot/fetch-metadata from 2 to 3 (#27)
+- Merge branch 'main' of github.com:LabEG/ts-fetch
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 ## [0.8.8] - 2026-01-17
 
 ### ⚙️ Miscellaneous Tasks
