@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.13] - 2026-07-03
+
+### ⚙️ Miscellaneous Tasks
+
+- *(deps)* Bump lewagon/wait-on-check-action from 1.6.1 to 1.8.0 (#31)
+- *(deps)* Bump actions/checkout from 6 to 7 (#32)
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 ## [0.8.12] - 2026-04-19
 
 ### 🐛 Bug Fixes
