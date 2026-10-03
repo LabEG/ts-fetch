@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.14] - 2026-10-03
+
+### ⚙️ Miscellaneous Tasks
+
+- *(deps)* Bump lewagon/wait-on-check-action from 1.8.0 to 1.8.1 (#34)
+- *(deps)* Bump actions/setup-node from 6 to 7 (#35)
+- *(deps)* Bump lewagon/wait-on-check-action from 1.8.1 to 1.9.0 (#38)
+- *(deps)* Bump lewagon/wait-on-check-action from 1.9.0 to 1.9.1 (#41)
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 ## [0.8.13] - 2026-07-03
 
 ### ⚙️ Miscellaneous Tasks
